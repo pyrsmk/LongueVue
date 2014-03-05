@@ -3,6 +3,19 @@ LongueVue 0.1.0
 
 LongueVue is a contents extractor build on top of `preg_match()`. Concretely, you can extract any string contents from anything, like discover articles on some blog to create a RSS stream.
 
+Installing
+----------
+
+Pick up the `src/LongueVue.php` file or install it with [Composer](https://getcomposer.org/) :
+
+```json
+{
+    "require": {
+        "pyrsmk/longuevue": "0.*"
+    }
+}
+```
+
 Matching and extracting
 -----------------------
 
