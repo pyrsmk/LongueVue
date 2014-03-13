@@ -1,7 +1,7 @@
 LongueVue 0.1.0
 ===============
 
-LongueVue is a contents extractor build on top of `preg_match()`. Concretely, you can extract any string contents from anything, like discover articles on some blog to create a RSS stream.
+LongueVue is a contents extractor built on top of `preg_match()`. Concretely, you can extract any string contents from anything, like discover articles on some blog to create a RSS stream per example.
 
 Installing
 ----------
@@ -11,7 +11,7 @@ Pick up the `src/LongueVue.php` file or install it with [Composer](https://getco
 ```json
 {
     "require": {
-        "pyrsmk/longuevue": "0.*"
+        "pyrsmk/longuevue": "0.1.*"
     }
 }
 ```
