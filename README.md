@@ -64,4 +64,4 @@ $longuevue->match('/articles//comments');
 License
 -------
 
-LongueVue is published under the MIT license.
+LongueVue is published under the [MIT license](http://dreamysource.mit-license.org).
