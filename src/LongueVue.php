@@ -118,6 +118,7 @@ class LongueVue{
 				null,
 				PREG_SPLIT_DELIM_CAPTURE
 			);
+			$regex='';
 			foreach($tokens as $token){
 				$name=substr($token,1,strlen($token)-2);
 				// Named slug
@@ -144,7 +145,7 @@ class LongueVue{
 					);
 				}
 				// Default value
-				if($this->default_values[$name]){
+				if(isset($this->default_values[$name])){
 					$regex.='?';
 				}
 			}
