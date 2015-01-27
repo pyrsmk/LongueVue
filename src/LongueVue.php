@@ -2,9 +2,6 @@
 
 /*
 	A simple contents extractor
-
-	Author
-		Aurélien Delogu (dev@dreamysource.fr)
 */
 class LongueVue{
 
@@ -85,9 +82,10 @@ class LongueVue{
 				continue;
 			}
 			// Verify value format
-			$regex=$this->validators[$name];
-			if($regex && $value && !preg_match('#^'.$regex.'$#S',$value)){
-				return false;
+			if($value && isset($this->validators[$name])){
+				if(!preg_match('#^'.$this->validators[$name].'$#S',$value)){
+					return false;
+				}
 			}
 			// Save value
 			if($value){
@@ -122,7 +120,7 @@ class LongueVue{
 			foreach($tokens as $token){
 				$name=substr($token,1,strlen($token)-2);
 				// Named slug
-				if($token{0}=='{'){
+				if($token && $token{0}=='{'){
 					$regex.='(?<'.$name.'>.*?)';
 				}
 				// Joker slug

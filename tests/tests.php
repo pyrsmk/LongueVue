@@ -2,7 +2,7 @@
 
 ########################################################### Prepare
 
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL);
 
 require __DIR__.'/../src/LongueVue.php';
 require __DIR__.'/vendor/autoload.php';
