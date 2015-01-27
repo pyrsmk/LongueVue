@@ -7,58 +7,56 @@ error_reporting(E_ALL);
 require __DIR__.'/../src/LongueVue.php';
 require __DIR__.'/vendor/autoload.php';
 
-$minisuite=new MiniSuite\Cli('LongueVue');
-$minisuite->disableAnsiColors();
+$minisuite=new MiniSuite('LongueVue');
 
 ########################################################### Base tests
 
-$minisuite->test('Dry',function(){
-	$longuevue=new LongueVue('foobar');
-	return $longuevue->match('foobar')===array();
-});
+$longuevue=new LongueVue('foobar');
+$minisuite->expects('Dry')
+		  ->that($longuevue->match('foobar'))
+		  ->isTheSameAs(array());
 
-$minisuite->test('One result',function(){
-	$longuevue=new LongueVue('#{foo}#');
-	return $longuevue->match('#...#')==
-		   array('foo'=>'...');
-});
+$longuevue=new LongueVue('#{foo}#');
+$minisuite->expects('One result')
+		  ->that($longuevue->match('#...#'))
+		  ->isTheSameAs(array('foo'=>'...'));
 
-$minisuite->test('Several results',function(){
-	$longuevue=new LongueVue('/{foo}/{bar}/{foobar}');
-	return $longuevue->match('/foo/bar/foobar')==
-		   array('foo'=>'foo','bar'=>'bar','foobar'=>'foobar');
-});
+$longuevue=new LongueVue('/{foo}/{bar}/{foobar}');
+$minisuite->expects('Several results')
+		  ->that($longuevue->match('/foo/bar/foobar'))
+		  ->isTheSameAs(array('foo'=>'foo','bar'=>'bar','foobar'=>'foobar'));
 
 $minisuite->group('Escaping',function($minisuite){
 
-	$minisuite->test('Match',function(){
-		$longuevue=new LongueVue('\{foo}');
-		return $longuevue->match('{foo}')===array();
-	});
+	$longuevue=new LongueVue('\{foo}');
 
-	$minisuite->test('Does not match',function(){
-		$longuevue=new LongueVue('\{foo}');
-		return $longuevue->match('bar')===false;
-	});
+	$minisuite->expects('Match')
+			  ->that($longuevue->match('{foo}'))
+			  ->isTheSameAs(array());
+
+	$minisuite->expects('Does not match')
+			  ->that($longuevue->match('bar'))
+			  ->isTheSameAs(false);
 
 });
 
 $minisuite->group('Special',function($minisuite){
 
-	$minisuite->test('+ match',function(){
-		$longuevue=new LongueVue('#+#');
-		return $longuevue->match('#abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_#')===array();
-	});
+	$longuevue=new LongueVue('#+#');
+	$minisuite->expects('Match')
+			  ->that($longuevue->match('#abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_#'))
+			  ->isTheSameAs(array());
 
-	$minisuite->test('+ does not match',function(){
-		$longuevue=new LongueVue('+');
-		return $longuevue->match('#foo#')===false;
-	});
 
-	$minisuite->test('* match',function(){
-		$longuevue=new LongueVue('*');
-		return $longuevue->match('#foo#')===array();
-	});
+	$longuevue=new LongueVue('+');
+	$minisuite->expects('+ does not match')
+			  ->that($longuevue->match('#foo#'))
+			  ->isTheSameAs(false);
+
+	$longuevue=new LongueVue('*');
+	$minisuite->expects('* matches')
+			  ->that($longuevue->match('#foo#'))
+			  ->isTheSameAs(array());
 
 });
 
@@ -66,17 +64,16 @@ $minisuite->group('Special',function($minisuite){
 
 $minisuite->group('Validation',function($minisuite){
 
-	$minisuite->test('Match',function(){
-		$longuevue=new LongueVue('#{foo}#{bar}#');
-		$longuevue->addValidator('foo','\d+');
-		return $longuevue->match('#1234#5678#')===array('foo'=>'1234','bar'=>'5678');
-	});
+	$longuevue=new LongueVue('#{foo}#{bar}#');
+	$longuevue->addValidator('foo','\d+');
 
-	$minisuite->test('Does not match',function(){
-		$longuevue=new LongueVue('#{foo}#{bar}#');
-		$longuevue->addValidator('foo','\d+');
-		return $longuevue->match('#1234abcd#5678#')===false;
-	});
+	$minisuite->expects('Match')
+			  ->that($longuevue->match('#1234#5678#'))
+			  ->isTheSameAs(array('foo'=>'1234','bar'=>'5678'));
+
+	$minisuite->expects('Does not match')
+			  ->that($longuevue->match('#1234abcd#5678#'))
+			  ->isTheSameAs(false);
 
 });
 
@@ -84,34 +81,32 @@ $minisuite->group('Validation',function($minisuite){
 
 $minisuite->group('Default values',function($minisuite){
 
-	$minisuite->test('Match',function(){
-		$longuevue=new LongueVue('{foo}');
-		$longuevue->addDefaultValue('foo','bar');
-		return $longuevue->match('foo')===array('foo'=>'foo');
-	});
+	$longuevue=new LongueVue('{foo}');
+	$longuevue->addDefaultValue('foo','bar');
+	$minisuite->expects('Match')
+			  ->that($longuevue->match('foo'))
+			  ->isTheSameAs(array('foo'=>'foo'));
 
-	$minisuite->test('Does not match',function(){
-		$longuevue=new LongueVue('##{foo}blah');
-		$longuevue->addDefaultValue('foo','bar');
-		return $longuevue->match('##blah')===array('foo'=>'bar');
-	});
 
-	$minisuite->test('Match with a validator',function(){
-		$longuevue=new LongueVue('#{foo}#');
-		$longuevue->addValidator('foo','\d+');
-		$longuevue->addDefaultValue('foo','5678');
-		return $longuevue->match('##')===array('foo'=>'5678');
-	});
+	$longuevue=new LongueVue('##{foo}blah');
+	$longuevue->addDefaultValue('foo','bar');
+	$minisuite->expects('Does not match')
+			  ->that($longuevue->match('##blah'))
+			  ->isTheSameAs(array('foo'=>'bar'));
 
-	$minisuite->test('Does not match with a validator',function(){
-		$longuevue=new LongueVue('{foo}');
-		$longuevue->addValidator('foo','\d+');
-		$longuevue->addDefaultValue('foo','5678');
-		return $longuevue->match('.1234.')===false;
-	});
+
+	$longuevue=new LongueVue('#{foo}#');
+	$longuevue->addValidator('foo','\d+');
+	$longuevue->addDefaultValue('foo','5678');
+	$minisuite->expects('Match with a validator')
+			  ->that($longuevue->match('##'))
+			  ->isTheSameAs(array('foo'=>'5678'));
+
+	$longuevue=new LongueVue('{foo}');
+	$longuevue->addValidator('foo','\d+');
+	$longuevue->addDefaultValue('foo','5678');
+	$minisuite->expects('Does not match with a validator')
+			  ->that($longuevue->match('.1234.'))
+			  ->isTheSameAs(false);
 
 });
-
-########################################################### Run tests
-
-$minisuite->run();

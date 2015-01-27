@@ -1,10 +1,7 @@
-MiniSuite 1.1.0
+MiniSuite 2.0.0
 ===============
 
-MiniSuite is a very concise and flexible unit testing tool.
-Nothing to learn about.
-Beautiful reports.
-No headaches.
+MiniSuite is a very concise and flexible unit testing tool based on the [php-expect](https://bitbucket.org/nunzion/php-expect) library.
 
 Installing
 ----------
@@ -14,102 +11,57 @@ You can download the class files (located in `src/`) or install MiniSuite with [
 ```json
 {
     "require": {
-        "pyrsmk/minisuite": "1.*"
+        "pyrsmk/minisuite": "2.0.*"
     }
 }
-```
-
-```shell
-composer install
-```
-
-Contexts
---------
-
-MiniSuite currently supports CLI and HTTP contexts.
-
-```php
-// Will print reports for CLI
-$minisuite=new MiniSuite\Cli('My Test Suite');
-```
-
-```php
-// Will print reports for browsers
-$minisuite=new MiniSuite\Http('My Test Suite');
 ```
 
 Run your tests
 --------------
 
-The `test()` method can accept any `callable`. If an exception occurs during the test, MiniSuite will quietly handle it and simply fails the test. Here's how to make a test :
+A test in MiniSuite begins with a call to the `expect()` method. It takes one parameter for the message to display and returns an `Expect` object (go take a look at its [documentation](https://bitbucket.org/nunzion/php-expect)).
 
 ```php
-$minisuite->test('I have 3 fruits in my basket',function(){
-    $fruits=array('apple','peach','strawberry');
-    return count($fruits)==3;
-});
+$fruits=array('apple','peach','strawberry');
+
+$minisuite=new MiniSuite('My tests');
+$minisuite->expect('I have 3 fruits in my basket')->that(count($fruits))->equals(3);
 ```
 
-To run all your tests, add this line :
-
-```php
-$minisuite->run();
-```
-
-And launch your PHP test file in the command line interface or your browser.
-
-ANSI colors
------------
-
-By default, MiniSuite uses ANSI colors to display beautiful CLI reports. But Windows does not support them natively. To disable those colors and have a boring, but not crappy, report :
-
-```php
-$minisuite->disableAnsiColors();
-```
+All your tests are automatically runned.
 
 Grouping
 --------
 
-For a better test report, it should be a good idea to group your tests. Per example, for the CLI context :
+For a better test report, it should be a good idea to group your tests.
 
 ```php
-$minisuite=new MiniSuite\Cli('My Test Suite');
+$minisuite=new MiniSuite('My Test Suite');
 $minisuite->disableAnsiColors();
 
 $minisuite->group('Group some tests',function($minisuite){
-    $minisuite->test('I have 3 fruits in my basket',function(){
-        $fruits=array('apple','peach','strawberry');
-        return count($fruits)==3;
-    });
-    $minisuite->test('And 5 vegetables',function(){
-        $vegetables=array('celery','potato','cabbage','endive','radicchio');
-        return count($vegetables)==5;
-    });
-    $minisuite->test('And 15 candies',function(){
-        $candies=array();
-        return count($candies)==15;
-    });
+    $fruits=array('apple','peach','strawberry');
+    $minisuite->expect('I have 3 fruits in my basket')->that(count($fruits))->equals(3);
+    $vegetables=array('celery','potato','cabbage','endive','radicchio');
+    $minisuite->expect('And 5 vegetables')->that(count($vegetables))->equals(5);
+    $candies=array();
+    $minisuite->expect('And 15 candies')->that(count($candies))->equals(15);
 });
 ```
 
 Will print :
 
-```shell
+```
 My Test Suite
-        Group some tests
-                Passed : I have 3 fruits in my basket
-                Passed : And 5 vegetables
-                Failed : And 15 candies
+    Group some tests
+        Passed : I have 3 fruits in my basket
+        Passed : And 5 vegetables
+        Failed : And 15 candies
 ```
 
 Note that group nesting is supported.
 
-Write your own report objects
------------------------------
-
-Writing your own objects to have another report for another context, or to beautify an existing report, is pretty simple. We encourage you to take a look at `MiniSuite\Cli` and `MiniSuite\Http` classes to quickly how it works.
-
 License
 -------
 
-MiniSuite is released under the MIT license.
+MiniSuite is released under the [MIT license](http://dreamysource.mit-license.org).

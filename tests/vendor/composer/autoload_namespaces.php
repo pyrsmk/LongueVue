@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Nunzion' => array($vendorDir . '/nunzion/php-expect/src'),
     'MiniSuite' => array($vendorDir . '/pyrsmk/minisuite/src'),
 );

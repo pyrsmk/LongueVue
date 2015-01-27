@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a6b3d884590dbbdae5c43f9d9ff1aee1",
+    "hash": "3e6a8630cc657fc0fb8c7a3473dd2931",
     "packages": [
         {
             "name": "nunzion/php-expect",
@@ -52,48 +52,6 @@
                 "validation"
             ],
             "time": "2014-05-18 02:28:53"
-        },
-        {
-            "name": "pyrsmk/minisuite",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pyrsmk/MiniSuite.git",
-                "reference": "1b196172c23246d42d7ed11dabb4f9cb67705dea"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pyrsmk/MiniSuite/zipball/1b196172c23246d42d7ed11dabb4f9cb67705dea",
-                "reference": "1b196172c23246d42d7ed11dabb4f9cb67705dea",
-                "shasum": ""
-            },
-            "require": {
-                "nunzion/php-expect": "~1.0",
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "MiniSuite": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Aurélien Delogu",
-                    "email": "dev@dreamysource.fr",
-                    "homepage": "http://dreamysource.fr"
-                }
-            ],
-            "description": "A mini unit testing tool",
-            "keywords": [
-                "testing",
-                "unit"
-            ],
-            "time": "2015-01-27 19:15:07"
         }
     ],
     "packages-dev": [],
@@ -101,6 +59,8 @@
     "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.3.0"
+    },
     "platform-dev": []
 }
