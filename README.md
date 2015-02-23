@@ -11,7 +11,7 @@ Pick up the `src/LongueVue.php` file or install it with [Composer](https://getco
 ```json
 {
     "require": {
-        "pyrsmk/longuevue": "0.1.*"
+        "pyrsmk/longuevue": "~0.1"
     }
 }
 ```
