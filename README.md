@@ -1,4 +1,4 @@
-LongueVue 0.1.4
+LongueVue 0.1.5
 ===============
 
 LongueVue is a contents extractor built on top of `preg_match()`. Concretely, you can extract any string contents from anything, like discover articles on some blog to create a RSS stream per example.
