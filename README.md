@@ -6,14 +6,10 @@ LongueVue is a contents extractor built on top of `preg_match()`. Concretely, yo
 Installing
 ----------
 
-Pick up the `src/LongueVue.php` file or install it with [Composer](https://getcomposer.org/) :
+Pick up the source or install it with [Composer](https://getcomposer.org/) :
 
 ```json
-{
-    "require": {
-        "pyrsmk/longuevue": "~0.1"
-    }
-}
+composer require pyrsmk/longuevue
 ```
 
 Matching and extracting
