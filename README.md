@@ -1,4 +1,4 @@
-LongueVue 0.1.5
+LongueVue 0.1.6
 ===============
 
 LongueVue is a contents extractor built on top of `preg_match()`. Concretely, you can extract any string contents from anything, like discover articles on some blog to create a RSS stream per example.
@@ -8,7 +8,7 @@ Installing
 
 Pick up the source or install it with [Composer](https://getcomposer.org/) :
 
-```json
+```
 composer require pyrsmk/longuevue
 ```
 
