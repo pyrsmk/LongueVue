@@ -1,6 +1,8 @@
 LongueVue 0.1.6
 ===============
 
+__LongueVue is now unmaintained. If you're searching for a web scraper, use [Goutte](https://github.com/FriendsOfPHP/Goutte). If you're looking for a router, take a look at [FastRoute](https://github.com/nikic/FastRoute).__
+
 LongueVue is a contents extractor built on top of `preg_match()`. Concretely, you can extract any string contents from anything, like discover articles on some blog to create a RSS stream per example.
 
 Installing
